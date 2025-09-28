@@ -5,7 +5,7 @@ import { ROLE_CONFIG } from "@/constants/userRoles";
 export default function RoleSelection({ onRoleSelect }) {
   return (
     <div className="max-w-4xl mx-auto text-center">
-      <div className="mb-12">
+      <div className="mb-10">
         <div className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-4">
           <Sparkles className="w-8 h-8 text-indigo-600" />
           <h1 className="text-4xl font-bold">Choose Your Role</h1>
@@ -16,21 +16,21 @@ export default function RoleSelection({ onRoleSelect }) {
       </div>
 
       {/* Role Cards */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
         {Object.entries(ROLE_CONFIG).map(([role, config]) => {
           const IconComponent = config.icon;
           return (
             <button
               key={role}
               onClick={() => onRoleSelect(role)}
-              className="group p-8 bg-gray-800/70 backdrop-blur-sm rounded-2xl border border-gray-700/50 hover:border-indigo-500/50 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl text-center"
+              className="group p-4 bg-gray-800/70 backdrop-blur-sm rounded-2xl border border-gray-700/50 hover:border-indigo-500/50 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl text-center"
             >
               <div
                 className={`w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-r ${config.color} p-4 group-hover:shadow-lg transition-all duration-300`}
               >
                 <IconComponent className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-3 group-hover:text-indigo-300 transition-colors">
+              <h3 className="text-xl text-centre mx-auto font-bold text-white mb-3 group-hover:text-indigo-300 transition-colors">
                 {config.title}
               </h3>
               <p className="text-gray-300 text-sm leading-relaxed group-hover:text-gray-200 transition-colors">
