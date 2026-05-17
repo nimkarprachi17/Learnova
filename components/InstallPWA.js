@@ -15,20 +15,13 @@ export default function InstallPWA() {
     // Check if running in browser
     if (typeof window === "undefined") return;
 
-    // Register the service worker (sw.js will handle the swe-worker automatically)
+    // Register the service worker
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker
         .register("/sw.js", { scope: "/" })
         .then((registration) => {
-          console.log(
-            "Service Worker registered successfully:",
-            registration.scope
-          );
-
           // Check for updates
-          registration.addEventListener("updatefound", () => {
-            console.log("Service Worker update found!");
-          });
+          registration.addEventListener("updatefound", () => {});
         })
         .catch((error) => {
           console.error("Service Worker registration failed:", error);
@@ -54,7 +47,6 @@ export default function InstallPWA() {
     const handler = (e) => {
       e.preventDefault();
       setInstallPrompt(e);
-      // Show prompt after 5 seconds
       setTimeout(() => setIsVisible(true), 5000);
     };
 
@@ -62,7 +54,6 @@ export default function InstallPWA() {
 
     // Listen for successful installation
     window.addEventListener("appinstalled", () => {
-      console.log("PWA was installed successfully");
       setIsInstalled(true);
       setIsVisible(false);
     });
@@ -79,11 +70,8 @@ export default function InstallPWA() {
       const result = await installPrompt.prompt();
 
       if (result.outcome === "accepted") {
-        console.log("User accepted the install prompt");
         setIsVisible(false);
         setInstallPrompt(null);
-      } else {
-        console.log("User dismissed the install prompt");
       }
     } catch (error) {
       console.error("Error during installation:", error);
