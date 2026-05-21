@@ -62,6 +62,12 @@ const InstituteDashboard = () => {
   );
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isLoading, setIsLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setInitialLoading(false), 1200);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Mock data - in real app, this would come from your backend
   const [dashboardData, setDashboardData] = useState({
@@ -1042,7 +1048,7 @@ const InstituteDashboard = () => {
     </div>
   );
 
-  if (loading) {
+  if (initialLoading) {
     return <DashboardSkeleton />;
   }
 

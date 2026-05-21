@@ -666,8 +666,8 @@ const TeacherDashboard = () => {
             <div className="space-y-3">
               {isLoadingRequests ? (
                 <div className="space-y-3">
-                  {[1, 2].map((i) => (
-                    <SkeletonCard key={i} height="h-28" rows={2} />
+                  {[1, 2, 3].map((i) => (
+                    <SkeletonCard key={i} />
                   ))}
                 </div>
               ) : requestsError ? (
