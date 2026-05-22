@@ -37,19 +37,19 @@ export function getWeekdaysSinceYearStart() {
 export const initializeUserStats = async (userId) => {
   if (!userId) return;
   const statsRef = doc(db, "userStats", userId);
-  
+
   const defaultStats = {
     "Courses Enrolled": 0,
     "Attendance Rate": "0%",
     "Assignments Done": 0,
     "Study Hours": 0,
-    lastUpdated: new Date()
+    lastUpdated: new Date(),
   };
 
   try {
     await setDoc(statsRef, defaultStats);
   } catch (error) {
-    console.error("Error initializing stats:", error);
+    // Error initializing stats
   }
 };
 
@@ -70,17 +70,17 @@ export const updateUserStat = async (userId, statField, value = 1) => {
 
   try {
     const statsSnap = await getDoc(statsRef);
-    
+
     if (!statsSnap.exists()) {
       await initializeUserStats(userId);
     }
 
     await updateDoc(statsRef, {
       [statField]: increment(value),
-      lastUpdated: new Date()
+      lastUpdated: new Date(),
     });
   } catch (error) {
-    console.error(`Error updating ${statField}:`, error);
+    // Error updating stat field
   }
 };
 
@@ -102,7 +102,7 @@ export const recalculateAttendanceRate = async (userId) => {
   const statsRef = doc(db, "userStats", userId);
   const attendanceQuery = query(
     collection(db, "attendance_records"),
-    where("userId", "==", userId)
+    where("userId", "==", userId),
   );
 
   try {
@@ -124,7 +124,6 @@ export const recalculateAttendanceRate = async (userId) => {
 
     return rate;
   } catch (error) {
-    console.error("Error recalculating attendance rate:", error);
     throw error;
   }
 };

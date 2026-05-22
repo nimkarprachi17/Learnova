@@ -30,15 +30,11 @@ export async function GET(request) {
 
     // Sorting params
     const sortBy = searchParams.get("sortBy") || "createdAt";
-    const sortOrder =
-      searchParams.get("sortOrder") === "asc" ? 1 : -1;
+    const sortOrder = searchParams.get("sortOrder") === "asc" ? 1 : -1;
 
     // Validation
     if (page < 1 || limit < 1) {
-      return jsonError(
-        "Page and limit must be greater than 0",
-        400
-      );
+      return jsonError("Page and limit must be greater than 0", 400);
     }
 
     const skip = (page - 1) * limit;
@@ -54,10 +50,7 @@ export async function GET(request) {
     // Student restriction
     if (profile.role === "student") {
       query.studentEmail = decodedToken.email;
-    } else if (
-      profile.role !== "admin" &&
-      profile.role !== "teacher"
-    ) {
+    } else if (profile.role !== "admin" && profile.role !== "teacher") {
       return jsonError("Forbidden", 403);
     }
 
@@ -103,10 +96,9 @@ export async function GET(request) {
           hasNextPage: page < totalPages,
         },
       },
-      200
+      200,
     );
   } catch (error) {
-    console.error("Exception fetch error:", error);
     return jsonError("Internal server error", 500);
   }
 }

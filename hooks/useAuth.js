@@ -14,12 +14,11 @@ export const useAuth = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-
   useEffect(() => {
-     if (!auth) {
-    setLoading(false);
-    return;
-  }
+    if (!auth) {
+      setLoading(false);
+      return;
+    }
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       try {
         if (firebaseUser) {
@@ -42,7 +41,6 @@ export const useAuth = () => {
 
         setError(null);
       } catch (err) {
-        console.error("Auth state change error:", err);
         setError(err.message);
         setUser(null);
         setUserProfile(null);
@@ -57,14 +55,13 @@ export const useAuth = () => {
   /**
    * Signs out the currently authenticated user and clears local auth state.
    * @returns {Promise<void>} Resolves when the user is successfully signed out.
-  */
+   */
   const signOut = async () => {
     try {
       await firebaseSignOut(auth);
       setUser(null);
       setUserProfile(null);
     } catch (err) {
-      console.error("Sign out error:", err);
       setError(err.message);
     }
   };

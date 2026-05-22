@@ -57,13 +57,12 @@ import DashboardSkeleton from "@/components/ui/DashboardSkeleton";
 
 const AttendanceTrendsChart = dynamic(
   () => import("@/components/charts/AttendanceTrendsChart"),
-  { ssr: false, loading: () => <ChartSkeleton variant="chart" /> }
+  { ssr: false, loading: () => <ChartSkeleton variant="chart" /> },
 );
 const EngagementChart = dynamic(
   () => import("@/components/charts/EngagementChart"),
-  { ssr: false, loading: () => <ChartSkeleton variant="doughnut" /> }
+  { ssr: false, loading: () => <ChartSkeleton variant="doughnut" /> },
 );
-
 
 const TeacherDashboard = () => {
   const [loading, setLoading] = useState(true);
@@ -278,7 +277,6 @@ const TeacherDashboard = () => {
       setAllRequests(normalizedRequests);
       setShowAllRequestsModal(true);
     } catch (error) {
-      console.error("Failed to fetch all exception requests:", error);
       setRequestsError(error.message);
     } finally {
       setIsLoadingRequests(false);
@@ -326,7 +324,6 @@ const TeacherDashboard = () => {
 
         setExceptionRequests(normalizedRequests);
       } catch (error) {
-        console.error("Failed to fetch exception requests:", error);
         setRequestsError(error.message);
       } finally {
         setIsLoadingRequests(false);
@@ -375,22 +372,20 @@ const TeacherDashboard = () => {
                 reviewedAt: new Date().toISOString(),
                 reviewedBy: user.displayName || user.email,
               }
-            : req
-        )
+            : req,
+        ),
       );
     } catch (error) {
-      console.error("Failed to update exception request:", error);
       alert("Failed to update request. Please try again.");
     }
   };
 
   useEffect(() => {
+    const loadingTimer = setTimeout(() => {
+      setLoading(false);
+    }, 1500);
 
-  const loadingTimer = setTimeout(() => {
-    setLoading(false);
-  }, 1500);
-
-  const interval = setInterval(() => {
+    const interval = setInterval(() => {
       const now = new Date();
       setCurrentTime(now);
 
@@ -419,9 +414,9 @@ const TeacherDashboard = () => {
     }, 1000);
 
     return () => {
-  clearInterval(timer);
-  clearTimeout(loadingTimer);
-};
+      clearInterval(timer);
+      clearTimeout(loadingTimer);
+    };
   }, []);
 
   const generatePasscode = () => {
@@ -466,10 +461,9 @@ const TeacherDashboard = () => {
     return user?.email?.[0]?.toUpperCase() || "T";
   };
 
-
   if (loading) {
-  return <DashboardSkeleton />;
-}
+    return <DashboardSkeleton />;
+  }
   const renderDashboard = () => (
     <div className="space-y-8">
       {/* Passcode Generation Section */}
@@ -598,8 +592,8 @@ const TeacherDashboard = () => {
                           student.status === "present"
                             ? "bg-green-400"
                             : student.status === "absent"
-                            ? "bg-red-400"
-                            : "bg-yellow-400"
+                              ? "bg-red-400"
+                              : "bg-yellow-400"
                         }`}
                       />
                       <div>
@@ -615,7 +609,7 @@ const TeacherDashboard = () => {
                     <div className="text-right">
                       <div
                         className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(
-                          student.status
+                          student.status,
                         )}`}
                       >
                         {student.status.toUpperCase()}
@@ -864,8 +858,8 @@ const TeacherDashboard = () => {
                               request.status === "approved"
                                 ? "bg-green-500/20 text-green-400 border border-green-500/30"
                                 : request.status === "rejected"
-                                ? "bg-red-500/20 text-red-400 border border-red-500/30"
-                                : "bg-yellow-500/20 text-yellow-400 border border-yellow-500/30"
+                                  ? "bg-red-500/20 text-red-400 border border-red-500/30"
+                                  : "bg-yellow-500/20 text-yellow-400 border border-yellow-500/30"
                             }`}
                           >
                             {request.status?.toUpperCase() || "PENDING"}

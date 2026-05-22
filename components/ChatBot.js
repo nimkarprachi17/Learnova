@@ -291,12 +291,8 @@ const LearnovaChatbot = () => {
         if (content) {
           return content;
         }
-      } else {
-        console.warn("Groq API route error:", payload);
-      }
-    } catch (err) {
-      console.error("Groq API route error:", err);
-      // Fall through to built-in responses
+      } catch (err) {
+        // Fall through to built-in responses
     }
 
     // Enhanced fallback responses
@@ -382,9 +378,9 @@ const LearnovaChatbot = () => {
       }
 
       const result = await response.json();
-      // console.log("✅ Saved to MongoDB:", result);
+      // Saved to MongoDB
     } catch (error) {
-      console.error("❌ MongoDB Save Error:", error);
+      // Silently handle save errors
     }
   };
 
@@ -408,7 +404,6 @@ const LearnovaChatbot = () => {
     try {
       botResponse = await generateBotResponse(messageText);
     } catch (error) {
-      console.error("Error generating response:", error);
       botResponse = `I apologize for the technical difficulty. Our team is here to help you directly:\n\n📧 **Email:** ${contactInfo.email}\n📞 **Phone:** ${contactInfo.phone}\n🎯 **Live Demo:** ${contactInfo.demo}\n\nI can still help with basic questions about Learnova's features!`;
     }
 

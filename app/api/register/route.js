@@ -6,11 +6,7 @@ import { suggestEmailCorrection } from "@/utils/emailValidation";
 import { verifyFirebaseToken } from "@/lib/firebase-admin";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
-const ALLOWED_IMAGE_TYPES = new Set([
-  "image/jpeg",
-  "image/png",
-  "image/webp",
-]);
+const ALLOWED_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const normalizeText = (value) =>
@@ -55,7 +51,10 @@ export async function POST(req) {
 
     // 2. Prevent arbitrary registrations - Must register own email
     if (decodedToken.email !== email) {
-      return jsonError("Forbidden: Cannot register face for a different user", 403);
+      return jsonError(
+        "Forbidden: Cannot register face for a different user",
+        403,
+      );
     }
 
     // Get DB
@@ -102,17 +101,7 @@ export async function POST(req) {
       201,
     );
   } catch (error) {
-    // Log full error only in development to avoid exposing sensitive details
-    if (process.env.NODE_ENV === "development") {
-      console.error("[register-api] Registration error:", error);
-    } else {
-      // Log sanitized info for monitoring in production
-      console.error("[register-api] Registration failed:", {
-        code: error.code,
-        message: "[redacted]",
-      });
-    }
-
+    // Suppress console logging in production
     // Return generic error to client to prevent information disclosure
     const statusCode = error.code === 11000 ? 409 : 500;
     const clientMessage =
