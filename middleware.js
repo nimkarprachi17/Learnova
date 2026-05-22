@@ -158,7 +158,12 @@ export async function middleware(request) {
       return NextResponse.redirect(new URL("/verify", request.url));
     }
 
-
+    // Role mismatch -> redirect to their appropriate dashboard or profile
+    if (userRole !== matchedDashboard.role) {
+      const correctDashboard = protectedDashboards.find((d) => d.role === userRole);
+      const redirectTarget = correctDashboard ? correctDashboard.defaultPath : "/profile";
+      return NextResponse.redirect(new URL(redirectTarget, request.url));
+    }
   }
 
   // 2. General user protected routes (/profile, /settings)
