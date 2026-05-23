@@ -97,15 +97,21 @@ export async function recordAttendance({
     return { alreadyRecorded: false, newRate: null, queuedOffline: true };
   }
 
-  await setDoc(doc(db, "attendance_records", `${userId}_${todayKey}`), {
-    userId,
-    studentName,
-    email,
-    timestamp: serverTimestamp(),
-    date: todayKey,
-    status: "present",
-    confidenceScore: confidenceScore ?? 0,
+  const response = await fetch("/api/attendance/record", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ 
+      userId, 
+      studentName, 
+      email, 
+      confidenceScore: confidenceScore ?? 0,
+      date: todayKey 
+    })
   });
+
+  if (!response.ok) {
+    throw new Error("Failed to record attendance securely on the server.");
+  }
 
   const newRate = await recalculateAttendanceRate(userId);
 
