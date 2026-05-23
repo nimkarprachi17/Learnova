@@ -3,9 +3,9 @@ import { connectDb } from "@/lib/mongodb";
 import { getUserProfile } from "@/lib/firebase-admin";
 import { jsonSuccess } from "@/lib/api-response";
 import { z } from "zod";
-import { withErrorHandler, authenticateRequest } from "@/lib/error-handler";
+import { withErrorHandler } from "@/lib/error-handler";
+import { requireAuth } from "@/lib/rbac";
 import { ValidationError, ForbiddenError } from "@/lib/errors";
-import logger from "@/utils/logger"; // Import the central Winston logger
 
 export const dynamic = "force-dynamic";
 
@@ -98,7 +98,7 @@ const settingsSchema = z
   .strict();
 
 export const PATCH = withErrorHandler(async (request) => {
-  const decodedToken = await authenticateRequest(request);
+  const decodedToken = await requireAuth(request);
 
   const body = await request.json();
   const parsed = settingsSchema.safeParse(body);
@@ -145,7 +145,7 @@ export const PATCH = withErrorHandler(async (request) => {
   );
 
   // FIX: Replaced unstructured console.log with a professional Winston audit block
-  logger.info({
+  console.info({
     message: "User settings profiles modified successfully",
     targetUserId,
     operatorId: decodedToken.uid,

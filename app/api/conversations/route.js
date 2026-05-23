@@ -2,7 +2,8 @@ import { connectDb } from "@/lib/mongodb";
 import { jsonSuccess } from "@/lib/api-response";
 import { z } from "zod";
 import xss from "xss";
-import { withErrorHandler, authenticateRequest } from "@/lib/error-handler";
+import { withErrorHandler } from "@/lib/error-handler";
+import { requireAuth } from "@/lib/rbac";
 import { AppError, ValidationError } from "@/lib/errors";
 
 // Force dynamic rendering to prevent build-time database connection errors
@@ -42,7 +43,7 @@ const conversationSchema = z.object({
 });
 
 export const POST = withErrorHandler(async (req) => {
-  const decodedToken = await authenticateRequest(req);
+  const decodedToken = await requireAuth(req);
 
   // Enforce payload constraint
   const rawText = await req.text();
@@ -81,7 +82,9 @@ export const POST = withErrorHandler(async (req) => {
 });
 
 export const GET = withErrorHandler(async (request) => {
-  const decodedToken = await authenticateRequest(request);
+  const decodedToken = await requireAuth(request);
+
+
   const db = await connectDb();
 
   // Sorted by newest first (-1) to fetch recent activity
