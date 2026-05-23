@@ -557,6 +557,7 @@ const TeacherDashboard = () => {
                 </div>
                 <button
                   onClick={copyPasscode}
+                  aria-label="Copy passcode"
                   className="bg-white/10 hover:bg-white/20 border border-white/20 text-white p-3 rounded-lg transition-colors"
                 >
                   {copied ? (
@@ -580,7 +581,7 @@ const TeacherDashboard = () => {
               <h2 className="text-2xl font-bold text-white">
                 Today's Attendance Overview
               </h2>
-              <button className="text-accent hover:text-accent/80 transition-colors">
+              <button aria-label="Refresh attendance" className="text-accent hover:text-accent/80 transition-colors">
                 <RefreshCw className="w-5 h-5" />
               </button>
             </div>

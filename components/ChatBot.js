@@ -279,6 +279,7 @@ const LearnovaChatbot = () => {
           <button
             type="submit"
             disabled={!inputMessage.trim() || isLoading}
+            aria-label="Send message"
             className={`p-2.5 rounded-lg transition-all ${
               inputMessage.trim() && !isLoading
                 ? "bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm"
