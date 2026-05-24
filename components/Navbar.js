@@ -394,9 +394,10 @@ export function Navbar() {
                             <div className="p-4 text-center text-sm text-zinc-400">No new notices</div>
                           ) : (
                             notifications.map((n) => (
-                              <div key={n.id} onClick={() => markAsRead(n.id)} className={`p-3 text-left cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-900/40 ${!n.read ? "bg-blue-50/30" : ""}`}>
-                                <p className="text-sm text-zinc-800 dark:text-zinc-200 line-clamp-2">{n.message}</p>
-                              </div>
+                              <button key={n.id} onClick={() => markAsRead(n.id)} role="button" 
+                              className={`w-full p-3 text-left cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-900/40 block focus:outline-none focus:ring-1 focus:ring-blue-500/50 ${!n.read ? "bg-blue-50/30" : ""}`}>
+                              <p className="text-sm text-zinc-800 dark:text-zinc-200 line-clamp-2">{n.message}</p>
+                              </button>
                             ))
                           )}
                         </div>
