@@ -276,6 +276,24 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for:
 - Code style standards
 - Pull request process
 
+### ⚠️ Contribution Limits
+
+To maintain repository quality and ensure fair visibility for all contributors, please note:
+
+- **Maximum 3–4 open Issues** per contributor at a time
+- **Maximum 3–4 open PRs** per contributor at a time
+
+**Why these limits?**
+- Encourages focused, high-quality work
+- Reduces spam and duplicate submissions
+- Ensures maintainers can review thoroughly
+- Gives all contributors fair visibility
+
+**Before opening new Issues/PRs:**
+✅ Close or merge previous open work  
+✅ Ensure proper testing and documentation  
+✅ Focus on quality over quantity  
+
 ---
 
 ## 📋 Code of Conduct
