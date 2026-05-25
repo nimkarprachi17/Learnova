@@ -16,6 +16,7 @@ import PageTransition from "@/components/PageTransition";
 import ScrollToTop from "@/components/ScrollToTop";
 import BackToTop from "@/components/BackToTop";
 import OfflineIndicator from "@/components/OfflineIndicator";
+import ScrollProgress from "@/components/ui/ScrollProgress";
 
 
 const geistSans = Geist({
@@ -244,6 +245,7 @@ export default function RootLayout({ children }) {
           {/* Cursor glow removed per UX preference */}
           
         <ThemeProvider>
+          <ScrollProgress />
           <AuthProvider>
             <NotificationProvider>
               <Suspense fallback={null}>
