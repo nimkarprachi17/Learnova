@@ -8,6 +8,8 @@ export const dynamic = "force-dynamic";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { detectInjection, sanitizeMessage, buildSecureMessages } from "@/utils/promptGuard";
 
+const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
+
 const groqSchema = z.object({
   message: z.string().optional(),
   userMessage: z.string().optional(),
@@ -37,7 +39,7 @@ const groqSchema = z.object({
     return message && message.trim().length <= 2000;
   },
   {
-    message: "Message too long",
+    message: "Message too long (max 2000 characters)",
   }
 );
 
@@ -186,7 +188,7 @@ export async function POST(request) {
 
     if (error.name === "AbortError") {
       return jsonError(
-        "Gateway Timeout: AI response took too long.",
+        "Gateway Timeout: Groq did not respond in time.",
         504
       );
     }
