@@ -358,7 +358,7 @@ export function Navbar() {
                         <div className="p-3 border-b border-zinc-200 dark:border-zinc-800 flex justify-between items-center bg-zinc-50 dark:bg-zinc-900/50">
                           <h3 className="text-zinc-900 dark:text-zinc-100 font-bold text-sm">Notifications</h3>
                           {unreadCount > 0 && (
-                            <button onClick={markAllAsRead} className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline">
+                            <button onClick={markAllAsRead} aria-label="Mark all notifications as read" className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline">
                               Mark all as read
                             </button>
                           )}
@@ -407,7 +407,7 @@ export function Navbar() {
                           </Link>
                         ))}
                         <hr className="my-1 border-zinc-100 dark:border-zinc-900" />
-                        <button onClick={handleLogout} className="w-full flex items-center px-4 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors">
+                        <button onClick={handleLogout} aria-label="Logout" className="w-full flex items-center px-4 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors">
                           <LogOut className="h-4 w-4 mr-2.5" /> Logout
                         </button>
                       </div>
